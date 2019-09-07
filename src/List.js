@@ -6,7 +6,7 @@ const List = ({ posts, onPostClick }) =>
   posts && posts.length ? (
     <ListOfItems>
       {posts.map(p => (
-        <Link to="/post" onClick={onPostClick(p.id)} className="postLink">
+        <Link to={`/post${p.id}`} onClick={onPostClick(p.id)} className="postLink">
           <ListItem button>
             {p.title ? (p.title.value ? p.title.value : p.title) : "no name"}
           </ListItem>

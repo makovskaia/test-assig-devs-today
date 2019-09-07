@@ -37,22 +37,23 @@ class Container extends React.Component {
         <div className="App">
           <AppBar position="static">
             <Toolbar>
-              <Link to="/list" style={{ cursor: "pointer" }}>
+              <Link to="/" style={{ cursor: "pointer" }}>
                 <Typography variant="h3">Posts</Typography>
               </Link>
-              <Link to="/list" style={{ marginLeft: "auto" }}>
+              <Link to="/" style={{ marginLeft: "auto" }}>
                 <Button color="inherit">List</Button>
               </Link>
             </Toolbar>
           </AppBar>
           <Route
-            path="/list"
+            path="/"
+            exact
             render={props => (
               <List {...props} posts={posts} onPostClick={this.onPostClick} />
             )}
           />
           <Route
-            path="/post/"
+            path={`/post${this.state.selectedPost + 1}`}
             render={props => (
               <Post {...props} post={posts[this.state.selectedPost]} />
             )}
