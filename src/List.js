@@ -1,22 +1,20 @@
-import React from 'react';
+import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { List as ListOfItems, ListItem, ListItemText } from '@material-ui/core'
+import { List as ListOfItems, ListItem, ListItemText } from "@material-ui/core";
 
-const List = ({ posts, onPostClick }) => posts && posts.length ? (
-  <ListOfItems>{
-    posts.map(p => (
-      
-        <Link to='/post' onClick={onPostClick(p.id)} className='postLink'>
+const List = ({ posts, onPostClick }) =>
+  posts && posts.length ? (
+    <ListOfItems>
+      {posts.map(p => (
+        <Link to="/post" onClick={onPostClick(p.id)} className="postLink">
           <ListItem button>
-            {
-              p.title ? p.title.value ? p.title.value : p.title : 'no name'
-            }
+            {p.title ? (p.title.value ? p.title.value : p.title) : "no name"}
           </ListItem>
         </Link>
-    ))
-  }</ListOfItems>
-) : (
-  <div>Loading...</div>
-)
+      ))}
+    </ListOfItems>
+  ) : (
+    <div>Loading...</div>
+  );
 
 export default List;
