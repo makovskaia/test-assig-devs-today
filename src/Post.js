@@ -1,8 +1,8 @@
 import React from 'react';
 
-function Post() {
+const Post = ({ post }) => {
   return (
-    <div>Post</div>
+    <div>{post ? post.id : 'no such post'}</div>
   );
 }
 

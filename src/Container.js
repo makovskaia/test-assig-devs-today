@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch, withRouter } from "react-router-dom";
 import List from './List'
 import Post from './Post'
 import { connect } from 'react-redux';
@@ -17,12 +17,16 @@ class Container extends React.Component {
       selectedPost: null,
       pending: false,
     }
+    this.onPostClick = this.onPostClick.bind(this)
   }
   componentWillMount() {
     this.props.fetch()
   }
   componentWillReceiveProps(props) {
     props.posts.length && this.setState({ posts: props.posts })
+  }
+  onPostClick(id) {
+    this.setState({ selectedPost: id })
   }
   render() {
     let posts = this.props.posts
@@ -34,10 +38,16 @@ class Container extends React.Component {
           </div>
           <div clssName="links">
             <Link to="/">List</Link>
-            <Link to="post">Post</Link>
+            <Link to="/post/">Post</Link>
           </div>
-          <Route path="/" exact component={List} />
-          <Route path="/post/" component={Post} />
+          <Route
+            path="/"
+            render={props => <List {...props} posts={posts} onPostClick={this.onPostClick} />}
+          />
+          <Route
+            path="/post/"
+            render={props => <Post {...props} post={posts[this.state.selectedPost]} />}
+          />
         </div>
       </Router>
     );
