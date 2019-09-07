@@ -1,12 +1,9 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import {
   BrowserRouter as Router,
   Route,
   Link,
-  Switch,
-  withRouter
 } from "react-router-dom";
 import List from "./List";
 import Post from "./Post";

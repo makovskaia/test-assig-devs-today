@@ -1,8 +1,4 @@
-const initState = {
-  status: 'ready',
-  posts: []
-}
-const posts = (state = [1], action) => {
+const posts = (state = [], action) => {
   switch (action.type) {
     case 'ADD_POSTS':
       return action.posts

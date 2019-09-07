@@ -1,15 +1,11 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import List from "./List";
-import Test from "./Test";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer from "./reducers/posts";
 //temp
-import { fetchPosts, addPosts } from "./actions/actions";
+import { fetchPosts } from "./actions/actions";
 //
 import Container from "./Container";
 //for redux dev tools
