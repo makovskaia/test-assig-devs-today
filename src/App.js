@@ -4,23 +4,38 @@ import './App.css';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import List from './List'
 import Test from './Test'
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import { createStore, applyMiddleware, compose } from 'redux';
+import rootReducer from './reducers/posts'
+//temp
+import { fetchPosts, addPosts } from './actions/actions' 
+//
+import Container from './Container'
+//for redux dev tools
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-function App() {
-  return (
-    <Router>
-      <div className="App">
-        <div className="App-header">
-          henlo
-        </div>
-        <div clssName="links">
-          <Link to="/">Home</Link>
-          <Link to="test">Test</Link>
-        </div>
-        <Route path="/" exact component={List} />
-        <Route path="/test/" component={Test} />
-      </div>
-    </Router>
-  );
+const store = createStore(rootReducer, composeEnhancers(
+ applyMiddleware(thunk)
+));
+
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      posts: store.getState()
+    }
+  }
+  componentWillMount() {
+    store.dispatch(fetchPosts())
+  }
+  render() {
+    return (
+      <Provider store={store}>
+        <Container />
+      </Provider>
+    );
+  }
 }
 
 export default App;
