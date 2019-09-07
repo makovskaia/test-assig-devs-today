@@ -5,40 +5,47 @@ import { BrowserRouter as Router, Route, Link, Switch, withRouter } from "react-
 import List from './List'
 import Post from './Post'
 import { connect } from 'react-redux';
-//temp
-import { fetchPosts, addPosts } from './actions/actions' 
-
+import { fetchPosts } from './actions/actions' 
+import { AppBar, Toolbar, Button, Typography } from '@material-ui/core';
 
 class Container extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      posts: props.posts,
       selectedPost: null,
-      pending: false,
     }
     this.onPostClick = this.onPostClick.bind(this)
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetch()
   }
-  componentWillReceiveProps(props) {
+  componentDidReceiveProps(props) {
     props.posts.length && this.setState({ posts: props.posts })
   }
   onPostClick(id) {
-    this.setState({ selectedPost: id })
+    return () => {
+      this.setState({ selectedPost: id - 1 })
+    }
   }
   render() {
     let posts = this.props.posts
     return (
       <Router>
         <div className="App">
-          <div className="App-header">
-            henlo
-          </div>
-          <div clssName="links">
-            <Link to="/list">List</Link>
-          </div>
+          <AppBar position="static">
+            <Toolbar>
+              <Link to="/list" style={{ cursor: 'pointer' }}>
+                <Typography variant="h3">
+                  Posts
+                </Typography>
+              </Link>
+              <Link to="/list" style={{ marginLeft: 'auto' }}>
+                <Button color="inherit">
+                  List
+                </Button>
+              </Link>
+            </Toolbar>
+          </AppBar>
           <Route
             path="/list"
             render={props => <List {...props} posts={posts} onPostClick={this.onPostClick} />}

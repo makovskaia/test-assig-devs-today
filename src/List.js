@@ -1,14 +1,20 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { List as ListOfItems, ListItem, ListItemText } from '@material-ui/core'
+
 const List = ({ posts, onPostClick }) => posts && posts.length ? (
-  <ul>{
+  <ListOfItems>{
     posts.map(p => (
-      <Link to='/post' onClick={() => {onPostClick(p.id)}}>{
-        p.title ? p.title.value ? p.title.value : p.title : 'no name'
-        }
-      </Link>
+      
+        <Link to='/post' onClick={onPostClick(p.id)} className='postLink'>
+          <ListItem button>
+            {
+              p.title ? p.title.value ? p.title.value : p.title : 'no name'
+            }
+          </ListItem>
+        </Link>
     ))
-  }</ul>
+  }</ListOfItems>
 ) : (
   <div>Loading...</div>
 )
