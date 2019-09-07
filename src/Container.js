@@ -37,11 +37,10 @@ class Container extends React.Component {
             henlo
           </div>
           <div clssName="links">
-            <Link to="/">List</Link>
-            <Link to="/post/">Post</Link>
+            <Link to="/list">List</Link>
           </div>
           <Route
-            path="/"
+            path="/list"
             render={props => <List {...props} posts={posts} onPostClick={this.onPostClick} />}
           />
           <Route
