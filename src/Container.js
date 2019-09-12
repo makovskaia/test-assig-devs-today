@@ -1,10 +1,6 @@
 import React from "react";
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import List from "./List";
 import Post from "./Post";
 import { connect } from "react-redux";
@@ -17,15 +13,14 @@ class Container extends React.Component {
     this.state = {
       selectedPost: null
     };
-    this.componentDidMount = this.componentDidMount.bind(this)
-    this.getPost = this.getPost.bind(this)
-
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.getPost = this.getPost.bind(this);
   }
   componentDidMount() {
-    this.props.init()
+    this.props.init();
   }
   getPost(id) {
-    return this.props.posts[id]
+    return this.props.posts[id];
   }
   render() {
     return (
@@ -45,10 +40,17 @@ class Container extends React.Component {
             path="/"
             exact
             render={props => (
-              <List {...props} posts={this.props.posts} />
+              <List
+                {...props}
+                posts={this.props.posts}
+                isFetching={this.props.isFetching}
+              />
             )}
           />
-          <Route path={`/post/:id/`} component={ props => (<Post {...props} getPost={this.getPost} />)} />
+          <Route
+            path={`/post/:id/`}
+            component={props => <Post {...props} getPost={this.getPost} />}
+          />
         </div>
       </Router>
     );
@@ -56,14 +58,15 @@ class Container extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  posts: state.posts, isFetching: state.isFetching
+  posts: state.posts,
+  isFetching: state.isFetching
 });
-
 
 const mapDispatchToProps = dispatch => ({
   init: () => dispatch(fetchPosts())
 });
 
-export default connect(mapStateToProps,
+export default connect(
+  mapStateToProps,
   mapDispatchToProps
 )(Container);
