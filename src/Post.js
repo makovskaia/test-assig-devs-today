@@ -1,7 +1,8 @@
 import React from "react";
 import { Paper, Typography } from "@material-ui/core";
 
-const Post = ({ post }) => {
+const Post = props => {
+  let post = props.getPost(props.match.params.id)
   const display = prop =>
     post[prop] ? post[prop].value || post[prop] : "no " + prop;
   return post ? (

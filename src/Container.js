@@ -18,9 +18,14 @@ class Container extends React.Component {
       selectedPost: null
     };
     this.componentDidMount = this.componentDidMount.bind(this)
+    this.getPost = this.getPost.bind(this)
+
   }
   componentDidMount() {
     this.props.init()
+  }
+  getPost(id) {
+    return this.props.posts[id]
   }
   render() {
     return (
@@ -40,26 +45,25 @@ class Container extends React.Component {
             path="/"
             exact
             render={props => (
-              <List {...props} />
+              <List {...props} posts={this.props.posts} />
             )}
           />
-          <Route
-            path={`/post${this.state.selectedPost + 1}`}
-            render={props => (
-              <Post {...props} />
-            )}
-          />
+          <Route path={`/post/:id/`} component={ props => (<Post {...props} getPost={this.getPost} />)} />
         </div>
       </Router>
     );
   }
 }
 
+const mapStateToProps = state => ({
+  posts: state.posts, isFetching: state.isFetching
+});
+
 
 const mapDispatchToProps = dispatch => ({
   init: () => dispatch(fetchPosts())
 });
 
-export default connect(undefined,
+export default connect(mapStateToProps,
   mapDispatchToProps
 )(Container);
