@@ -5,9 +5,13 @@ const initState = {
 const posts = (state = initState, action) => {
   switch (action.type) {
     case 'TOGGLE_ISFETCHING':
-      return Object.assign(state, { isFetching: action.isFetching })
+      return { ...state, isFetching: action.isFetching }
     case 'ADD_POSTS':
-      return Object.assign(state, { posts: action.posts })
+      return { ...state, posts: action.posts }
+    case 'FETCH_POSTS_FAIL':
+      return { ...state, isFetching: false }
+    case 'FETCH_POSTS_WIN':
+      return { ...state, isFetching: false, posts: action.response }
     default:
       return state
   }

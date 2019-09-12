@@ -17,21 +17,12 @@ class Container extends React.Component {
     this.state = {
       selectedPost: null
     };
-    this.onPostClick = this.onPostClick.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this)
   }
   componentDidMount() {
-    this.props.fetch();
-  }
-  componentDidReceiveProps(props) {
-    props.posts.length && this.setState({ posts: props.posts });
-  }
-  onPostClick(id) {
-    return () => {
-      this.setState({ selectedPost: id - 1 });
-    };
+    this.props.init()
   }
   render() {
-    let posts = this.props.posts;
     return (
       <Router>
         <div className="App">
@@ -49,13 +40,13 @@ class Container extends React.Component {
             path="/"
             exact
             render={props => (
-              <List {...props} posts={posts} onPostClick={this.onPostClick} />
+              <List {...props} />
             )}
           />
           <Route
             path={`/post${this.state.selectedPost + 1}`}
             render={props => (
-              <Post {...props} post={posts[this.state.selectedPost]} />
+              <Post {...props} />
             )}
           />
         </div>
@@ -64,15 +55,11 @@ class Container extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  posts: state
-});
 
 const mapDispatchToProps = dispatch => ({
-  fetch: () => dispatch(fetchPosts())
+  init: () => dispatch(fetchPosts())
 });
 
-export default connect(
-  mapStateToProps,
+export default connect(undefined,
   mapDispatchToProps
 )(Container);
